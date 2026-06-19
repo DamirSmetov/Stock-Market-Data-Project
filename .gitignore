@@ -1,0 +1,25 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+logs/
+
+# Spark
+checkpoints/
+spark-warehouse/
+
+# Data
+data/
+
+# OS
+.DS_Store
+Thumbs.db
