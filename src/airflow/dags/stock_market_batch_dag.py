@@ -1,19 +1,14 @@
 import os
 from datetime import datetime, timedelta
 
-from airflow import from airflow import DAG
+from airflow import DAG
 from airflow.decorators import task
+from airflow.operators.bash import BashOperator
 from airflow.operators.empty import EmptyOperator
 from datetime import datetime, timedelta 
-from dotenv import load_dotenv
-
-load_dotenv()
 
 
-
-dag_owner = os.getenv("DAG_OWNER")
-
-default_args = {'owner': dag_owner,
+default_args = {'owner': 'Damir',
         'depends_on_past': False,
         'email_on_failure': False,
         'email_on_retry': False,
@@ -27,8 +22,8 @@ dag = DAG(
     default_args=default_args,
     description="Stock Market Data Pipeline",
     schedule_interval=(timedelta(days=1)),
-    start_date = datetime(2026, 6, 18)
-    catchup=False,
+    start_date = datetime(2026, 6, 22),
+    catchup=False
 )
 
 # Task to fetch historical data
@@ -40,7 +35,7 @@ fetch_historical_data = BashOperator(
 
 # Task to fetch historical data
 consume_historical_data = BashOperator(
-    task_id="fetch_historical_data",
+    task_id="consume_historical_data",
     bash_command="python /opt/airflow/dags/scripts/batch_data_consumer.py {{ ds }}",
     dag=dag,
 )
@@ -74,6 +69,7 @@ process_complete = BashOperator(
     task_id="process_complete",
     bash_command="""
     echo "Batch Process for time {{ ds }} is complete"
-    """
+    """,
+    dag=dag    
 )
-fetch_historical_data >> consume_historical_data >> process_data >> load_to_snowflake >> process_complete
+fetch_historical_data >> consume_historical_data >> process_data >> check_minio >> load_to_snowflake >> process_complete

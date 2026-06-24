@@ -37,6 +37,7 @@ MINIO_SECRET_KEY = os.getenv("MINIO_SECRET_KEY")
 MINIO_ENDPOINT = os.getenv("MINIO_ENDPOINT")
 MINIO_BUCKET = os.getenv("MINIO_BUCKET")
 
+
 def create_spark_session():
     logger.info("Initializing Spark session with S3 configuration...")
     spark = (SparkSession.builder

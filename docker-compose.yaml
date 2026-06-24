@@ -8,7 +8,7 @@ x-airflow-common: &airflow-common
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
     AIRFLOW__SCHEDULER__MIN_FILE_PROCESS_INTERVAL: 10
-    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:- confluent-kafka yfinance pandas boto3 snowflake-connector-python minio}
+    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:- confluent-kafka yfinance==0.2.18 multitasking==0.0.11 pandas boto3 snowflake-connector-python minio}
   volumes:
     - ./src/airflow/dags:/opt/airflow/dags
     - ./src/airflow/logs:/opt/airflow/logs

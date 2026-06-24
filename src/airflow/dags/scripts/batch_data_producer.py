@@ -152,7 +152,7 @@ def main():
             topic=KAFKA_TOPIC_BATCH
         )
         
-        collector.collect_historical_data(period="1y")
+        collector.collect_historical_data(period="1d")
     except Exception as e:
         logger.error(f"Failed to initialize HistoricalDataCollector: {e}")
         return
